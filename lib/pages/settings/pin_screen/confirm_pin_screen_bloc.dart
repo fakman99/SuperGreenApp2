@@ -30,24 +30,23 @@ class ConfirmPinPageBlocEventInit extends ConfirmPinPageBlocEvent {
 abstract class ConfirmPinPageBlocState extends Equatable {}
 
 class ConfirmPinPageBlocStateInit extends ConfirmPinPageBlocState {
-  final String code;
-
-  ConfirmPinPageBlocStateInit(this.code);
   @override
-  List<Object> get props => [code];
+  List<Object> get props => [];
 }
 
 class ConfirmPinPageBlocStateLoaded extends ConfirmPinPageBlocState {
+  final String code;
+
+  ConfirmPinPageBlocStateLoaded(this.code);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [code];
 }
 
 class ConfirmPinPageBloc
     extends Bloc<ConfirmPinPageBlocEvent, ConfirmPinPageBlocState> {
   final MainNavigateToConfirmPinPageEvent args;
 
-  ConfirmPinPageBloc(this.args)
-      : super(ConfirmPinPageBlocStateInit(args.code)) {
+  ConfirmPinPageBloc(this.args) : super(ConfirmPinPageBlocStateInit()) {
     add(ConfirmPinPageBlocEventInit());
   }
 
@@ -55,7 +54,7 @@ class ConfirmPinPageBloc
   Stream<ConfirmPinPageBlocState> mapEventToState(
       ConfirmPinPageBlocEvent event) async* {
     if (event is ConfirmPinPageBlocEventInit) {
-      yield ConfirmPinPageBlocStateLoaded();
+      yield ConfirmPinPageBlocStateLoaded(args.code);
     }
   }
 }

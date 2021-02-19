@@ -40,56 +40,52 @@ class _ConfirmPinPageState extends State<ConfirmPinPage> {
   int chances = 3;
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
+    return BlocBuilder<ConfirmPinPageBloc, ConfirmPinPageBlocState>(
         cubit: BlocProvider.of<ConfirmPinPageBloc>(context),
-        listener: (BuildContext context, ConfirmPinPageBlocState state) async {
+        builder: (context, state) {
           if (state is ConfirmPinPageBlocStateInit) {
             return FullscreenLoading();
           }
-        },
-        child: BlocBuilder<ConfirmPinPageBloc, ConfirmPinPageBlocState>(
-            cubit: BlocProvider.of<ConfirmPinPageBloc>(context),
-            builder: (context, state) {
-              return Scaffold(
-                  appBar: AppBar(
-                    backgroundColor: Colors.white,
-                    leading: SvgPicture.asset(
-                        "assets/super_green_lab_vertical_black.svg"),
-                    elevation: 1,
-                  ),
-                  backgroundColor: Colors.white,
-                  body: PinCodeConfirm(
-                    code: state.props.last,
-                    backgroundColor: Colors.white,
-                    titleImage: SvgPicture.asset(
-                        "assets/super_green_lab_vertical_black.svg"),
-                    codeLength: 4,
-                    // you may skip correctPin and plugin will give you pin as
-                    // call back of [onCodeFail] before it clears pin
-                    correctPin: "1234",
-                    onCodeSuccess: () {
-                      print("succes");
-                    },
-                    onCodeFail: (code) {
-                      // decreases chances by 1 if wrong pass till chances == 0
-                      chances -= 1;
-                      //vibrates for 340ms
-                      Vibration.vibrate(duration: 340);
-                      //Alerts the users with a dialog box
-                      FlutterToastAlert.showToastAndAlert(
-                        type: Type.Normal,
-                        iosSubtitle: "Pin doesn't match",
-                        androidToast: "Pin doesn't match",
-                        toastDuration: 3,
-                        toastShowIcon: false,
-                      );
+          return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                leading: SvgPicture.asset(
+                    "assets/super_green_lab_vertical_black.svg"),
+                elevation: 1,
+              ),
+              backgroundColor: Colors.white,
+              body: PinCodeConfirm(
+                code: state.props.last,
+                backgroundColor: Colors.white,
+                titleImage: SvgPicture.asset(
+                    "assets/super_green_lab_vertical_black.svg"),
+                codeLength: 4,
+                // you may skip correctPin and plugin will give you pin as
+                // call back of [onCodeFail] before it clears pin
+                correctPin: "1234",
+                onCodeSuccess: () {
+                  print("succes");
+                },
+                onCodeFail: (code) {
+                  // decreases chances by 1 if wrong pass till chances == 0
+                  chances -= 1;
+                  //vibrates for 340ms
+                  Vibration.vibrate(duration: 340);
+                  //Alerts the users with a dialog box
+                  FlutterToastAlert.showToastAndAlert(
+                    type: Type.Normal,
+                    iosSubtitle: "Pin doesn't match",
+                    androidToast: "Pin doesn't match",
+                    toastDuration: 3,
+                    toastShowIcon: false,
+                  );
 
-                      if (chances == 0) {
-                        // reassign 3 to chances then shows a dialog alert with countdowntimer
+                  if (chances == 0) {
+                    // reassign 3 to chances then shows a dialog alert with countdowntimer
 
-                      }
-                    },
-                  ));
-            }));
+                  }
+                },
+              ));
+        });
   }
 }
