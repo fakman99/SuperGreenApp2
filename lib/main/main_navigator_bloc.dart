@@ -585,6 +585,25 @@ class MainNavigateToRemoteBoxEvent extends MainNavigatorEvent {
   List<Object> get props => [id];
 }
 
+class MainNavigateToSettingsPinScreenEvent extends MainNavigatorEvent {
+  MainNavigateToSettingsPinScreenEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class MainNavigateToConfirmPinPageEvent extends MainNavigatorEvent {
+  final String code;
+
+  MainNavigateToConfirmPinPageEvent(
+    this.code, {
+    Function(Future<Object> f) futureFn,
+  }) : super(futureFn: futureFn);
+
+  @override
+  List<Object> get props => [futureFn, code];
+}
+
 class MainNavigatorActionPop extends MainNavigatorEvent {
   final dynamic param;
   final bool mustPop;
@@ -780,6 +799,12 @@ class MainNavigatorBloc extends Bloc<MainNavigatorEvent, dynamic> {
     } else if (event is MainNavigateToRemoteBoxEvent) {
       future =
           _navigatorKey.currentState.pushNamed('/public/box', arguments: event);
+    } else if (event is MainNavigateToSettingsPinScreenEvent) {
+      future = _navigatorKey.currentState
+          .pushNamed('/settings/pinscreen', arguments: event);
+    } else if (event is MainNavigateToConfirmPinPageEvent) {
+      future = _navigatorKey.currentState
+          .pushNamed('/settings/pinscreen/confirm', arguments: event);
     }
     if (event.futureFn != null) {
       event.futureFn(future);

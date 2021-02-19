@@ -59,7 +59,7 @@ class _ConfirmPinPageState extends State<ConfirmPinPage> {
                   ),
                   backgroundColor: Colors.white,
                   body: PinCodeConfirm(
-                    code: state.props.first,
+                    code: state.props.last,
                     backgroundColor: Colors.white,
                     titleImage: SvgPicture.asset(
                         "assets/super_green_lab_vertical_black.svg"),

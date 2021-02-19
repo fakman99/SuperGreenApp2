@@ -125,6 +125,10 @@ import 'package:super_green_app/pages/settings/devices/settings_devices_bloc.dar
 import 'package:super_green_app/pages/settings/devices/settings_devices_page.dart';
 import 'package:super_green_app/pages/settings/devices/upgrade/settings_upgrade_device_bloc.dart';
 import 'package:super_green_app/pages/settings/devices/upgrade/settings_upgrade_device_page.dart';
+import 'package:super_green_app/pages/settings/pin_screen/confirm_pin_screen_bloc.dart';
+import 'package:super_green_app/pages/settings/pin_screen/confirm_pin_screen_page.dart';
+import 'package:super_green_app/pages/settings/pin_screen/settings_pin_screen_bloc.dart';
+import 'package:super_green_app/pages/settings/pin_screen/settings_pin_screen_page.dart';
 import 'package:super_green_app/pages/settings/plants/edit_config/settings_plant_bloc.dart';
 import 'package:super_green_app/pages/settings/plants/edit_config/settings_plant_page.dart';
 import 'package:super_green_app/pages/settings/plants/settings_plants_bloc.dart';
@@ -566,6 +570,16 @@ class _MainPageState extends State<MainPage> {
                 create: (context) => RemoteBoxFeedBloc(settings.arguments)),
           ],
           child: RemoteBoxFeedPage(),
+        );
+      case '/settings/pinscreen':
+        return BlocProvider(
+          create: (context) => SettingsPinScreenBloc(settings.arguments),
+          child: SettingsPinScreenPage(),
+        );
+      case '/settings/pinscreen/confirm':
+        return BlocProvider(
+          create: (context) => ConfirmPinPageBloc(settings.arguments),
+          child: ConfirmPinPage(),
         );
     }
     return Text('Unknown route');
